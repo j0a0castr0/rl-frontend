@@ -1,26 +1,26 @@
-// src/api/api.ts or wherever
-import { Listing, Availability } from '../components/types';
+const BASE_URL = process.env.REACT_APP_API_BASE_URL || '';
 
+interface RequestOptions extends RequestInit {
+  body?: any;
+}
 
-export const getListings = async (): Promise<Listing[]> => {
-  const res = await fetch('/api/listings');
-  return res.json();
-};
+export const apiRequest = async (path: string, options: RequestOptions = {}) => {
+  const url = `${BASE_URL}${path}`;
+  const fetchOptions: RequestInit = {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.headers || {})
+    },
+    body: options.body ? JSON.stringify(options.body) : undefined,
+  };
 
-export const createListing = async (listing: Listing): Promise<Listing> => {
-  const res = await fetch('/api/listing', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(listing)
-  });
-  return res.json();
-};
+  const res = await fetch(url, fetchOptions);
 
-export const addAvailability = async (listingId: string, slot: Availability) => {
-  const res = await fetch(`/api/listing/${listingId}/availability`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(slot)
-  });
+  if (!res.ok) {
+    const errBody = await res.json().catch(() => ({}));
+    throw new Error(errBody.message || 'API request failed');
+  }
+
   return res.json();
 };
