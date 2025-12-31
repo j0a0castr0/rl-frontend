@@ -1,12 +1,123 @@
-/* Container */
-.container {
+/* ======================= */
+/* General & Root Styles   */
+/* ======================= */
+body, html, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f7fa;
+    box-sizing: border-box;
+  }
+  
+  /* ======================= */
+  /* Login Page              */
+  /* ======================= */
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+  }
+  
+  .login-card {
+    width: 400px;
+    max-width: 90%;
+    padding: 3rem 2.5rem;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    text-align: center;
+    animation: slideDown 0.4s ease-out;
+  }
+  
+  @keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  .login-card h2 {
+    margin-bottom: 2rem;
+    font-weight: 600;
+    font-size: 1.8rem;
+    color: #111827;
+  }
+  
+  .login-card input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #d1d5db;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+  }
+  
+  .login-card input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+  
+  .login-card button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    border: none;
+    background-color: #6c63ff;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  
+  .login-card button:hover {
+    background-color: #5952d4;
+    transform: translateY(-1px);
+  }
+  
+  .login-card button[disabled]::after {
+    content: '';
+    display: inline-block;
+    margin-left: 8px;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #fff;
+    border-top: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .login-card .error {
+    color: #dc2626;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    text-align: left;
+  }
+  
+  /* ======================= */
+  /* Dashboard Container     */
+  /* ======================= */
+  .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     font-family: 'Inter', sans-serif;
   }
   
-  /* Header */
+  /* ======================= */
+  /* Header & Floating Button */
+  /* ======================= */
   .header {
     display: flex;
     justify-content: space-between;
@@ -17,7 +128,6 @@
     margin-bottom: 20px;
   }
   
-  /* Floating plus button */
   .plus-button {
     background-color: #6c63ff;
     color: #fff;
@@ -30,19 +140,21 @@
     box-shadow: 0 6px 16px rgba(0,0,0,0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
+  
   .plus-button:hover {
     transform: scale(1.1);
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
   }
   
-  /* Content area */
+  /* ======================= */
+  /* Content & Cards         */
+  /* ======================= */
   .content {
     display: flex;
     flex-direction: column;
     gap: 16px;
   }
   
-  /* Cards */
   .card {
     background-color: #fff;
     border-radius: 12px;
@@ -50,27 +162,24 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
+  
   .card:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 14px rgba(0,0,0,0.12);
   }
   
-  /* Listing slide-in animation */
-  @keyframes slideFadeInTop {
-    0% {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
   .slide-in {
     animation: slideFadeInTop 0.4s ease forwards;
   }
   
-  /* Slide-over panel */
+  @keyframes slideFadeInTop {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* ======================= */
+  /* Slide-over Panel        */
+  /* ======================= */
   .slide-over {
     position: fixed;
     top: 0;
@@ -80,16 +189,16 @@
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
     box-shadow: -6px 0 20px rgba(0,0,0,0.25);
-    transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    transition: transform 0.3s ease-in-out;
     z-index: 1000;
     display: flex;
     flex-direction: column;
   }
+  
   .slide-over.open {
-    right: 0;
+    transform: translateX(0%);
   }
   
-  /* Slide-over header */
   .slide-over-header {
     display: flex;
     justify-content: space-between;
@@ -97,6 +206,7 @@
     padding: 20px;
     border-bottom: 1px solid rgba(0,0,0,0.05);
   }
+  
   .close-button {
     background: none;
     border: none;
@@ -104,7 +214,6 @@
     cursor: pointer;
   }
   
-  /* Slide-over content & form inputs */
   .slide-over-content {
     padding: 20px 24px 24px 20px;
     overflow-y: auto;
@@ -122,7 +231,9 @@
     font-size: 14px;
     border-radius: 8px;
     border: 1px solid #ccc;
+    box-sizing: border-box;
   }
+  
   .slide-over-content form button {
     background-color: #6c63ff;
     color: white;
@@ -130,6 +241,7 @@
     cursor: pointer;
     transition: background 0.2s ease;
   }
+  
   .slide-over-content form button:hover {
     background-color: #5952d4;
   }
@@ -137,34 +249,28 @@
   .slide-over-inner {
     padding-right: 6px;
   }
-
-  .slide-over-content form input,
-    .slide-over-content form button {
-    box-sizing: border-box;
-    }
-
-
-  /* Input animation keyframes */
+  
   @keyframes slideFadeIn {
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
+    to { opacity: 1; transform: translateX(0); }
   }
   
-  /* Dim overlay */
+  /* ======================= */
+  /* Overlay                  */
+  /* ======================= */
   .overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.25);
+    background-color: rgba(0,0,0,0.3);
     backdrop-filter: blur(2px);
     z-index: 900;
   }
   
-  /* Slot badges */
+  /* ======================= */
+  /* Slot Badges & Form      */
+  /* ======================= */
   .slot-badges {
     display: flex;
     flex-wrap: wrap;
@@ -172,8 +278,7 @@
     margin-top: 6px;
   }
   
-  /* Slot badges – refined */
-.slot-badge {
+  .slot-badge {
     padding: 6px 12px;
     border-radius: 10px;
     font-size: 12.5px;
@@ -182,45 +287,24 @@
     line-height: 1;
     display: inline-flex;
     align-items: center;
-    color: #1f2937; /* slate-800 vibe */
+    color: #1f2937;
     background: rgba(255,255,255,0.6);
     backdrop-filter: blur(6px);
-  
     box-shadow:
       inset 0 0 0 1px rgba(0,0,0,0.06),
       0 1px 3px rgba(0,0,0,0.08);
-  
     opacity: 0;
     transform: translateY(-6px);
     animation: slotSlideFadeIn 0.25s ease forwards;
   }
   
-  .slot-badge.morning {
-    color: #92400e;
-    background: rgba(253, 230, 138, 0.35);
-  }
+  .slot-badge.morning { color: #92400e; background: rgba(253, 230, 138, 0.35); }
+  .slot-badge.afternoon { color: #1e3a8a; background: rgba(191, 219, 254, 0.35); }
+  .slot-badge.evening { color: #581c87; background: rgba(233, 213, 255, 0.35); }
   
-  .slot-badge.afternoon {
-    color: #1e3a8a;
-    background: rgba(191, 219, 254, 0.35);
-  }
-  
-  .slot-badge.evening {
-    color: #581c87;
-    background: rgba(233, 213, 255, 0.35);
-  }
-  
-  
-  /* Slot animation */
   @keyframes slotSlideFadeIn {
-    0% {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
   
   .listing-list {
@@ -228,9 +312,8 @@
     flex-direction: column;
     gap: 16px;
   }
-
-  /* Slot form */
-.slot-form {
+  
+  .slot-form {
     margin-top: 14px;
     display: flex;
     gap: 10px;
@@ -238,7 +321,6 @@
     align-items: center;
   }
   
-  /* Date & time inputs */
   .slot-form input[type="date"],
   .slot-form input[type="time"] {
     appearance: none;
@@ -255,9 +337,8 @@
     border-color: #6c63ff;
     box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
   }
-
-  /* Add Slot button */
-.slot-form button {
+  
+  .slot-form button {
     padding: 10px 18px;
     border-radius: 999px;
     background: linear-gradient(135deg, #6c63ff, #7b73ff);
@@ -280,12 +361,6 @@
     cursor: not-allowed;
     box-shadow: none;
   }
-
-  .slot-groups {
-    margin-top: 8px;
-  }
-
-  .slot-badge {
-    will-change: transform, opacity;
-  }
+  
+  .slot-groups { margin-top: 8px; }
   
