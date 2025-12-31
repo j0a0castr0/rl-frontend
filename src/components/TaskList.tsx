@@ -30,7 +30,7 @@ const TaskList: React.FC<TaskListProps> = ({ listings }) => {
   };
 
   return (
-    <div>
+    <div className="listing-list">
       {listings.length === 0 && <p>No listings yet.</p>}
       {listings.map(listing => (
         <div key={listing.id} className="card listing-item slide-in">

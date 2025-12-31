@@ -48,7 +48,9 @@ const App: React.FC = () => {
           </button>
         </div>
         <div className="slide-over-content">
-          <TaskCreate onCreated={handleListingCreated} />
+          <div className="slide-over-inner">
+            <TaskCreate onCreated={handleListingCreated} />
+          </div>
         </div>
       </div>
 

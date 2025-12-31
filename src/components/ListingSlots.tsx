@@ -92,10 +92,7 @@ const ListingSlots: React.FC<ListingSlotsProps> = ({ listingId, slots, onSlotAdd
       </div>
 
       {/* Add slot form */}
-      <form
-        onSubmit={addSlot}
-        style={{ marginTop: '12px', display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}
-      >
+      <form onSubmit={addSlot} className="slot-form">
         {/* Day selector */}
         <input
           type="date"
