@@ -3,6 +3,7 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import ProtectedRoute from './auth/ProtectedRoute';
 import PublicBookingPage from './pages/PublicBookingPage';
+import VisitsPage from './pages/VisitsPage';
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,16 @@ const App: React.FC = () => {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/visits"
+          element={
+            <ProtectedRoute>
+              <VisitsPage />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/public/:listingId" element={<PublicBookingPage />} />
       </Routes>
     </BrowserRouter>

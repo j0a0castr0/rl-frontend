@@ -53,7 +53,8 @@ const PublicScheduleingPage: React.FC = () => {
           visitorName,
           visitorPhone,
           visitorEmail,
-          visitTime: slot.from,
+          visitStartTime: slot.from,
+          visitEndTime: slot.to
         },
       });
 
