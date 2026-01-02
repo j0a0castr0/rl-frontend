@@ -46,13 +46,36 @@ const TaskList: React.FC<TaskListProps> = ({ listings }) => {
     <div className="listing-list">
       {listings.length === 0 && <p>No listings yet.</p>}
       {listings.map(listing => (
-        <div key={listing.id} className="card listing-item slide-in">
-          <div>
+        <div
+          key={listing.id}
+          className="card listing-item slide-in"
+          style={{
+            position: 'relative',
+            overflow: 'hidden',
+            borderRadius: '12px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            marginBottom: '16px',
+          }}
+        >
+          {/* Image at the top */}
+          <div style={{ height: '180px', width: '100%', overflow: 'hidden' }}>
+            <img
+              src={`https://picsum.photos/400/180?random=${listing.id}`}
+              alt="Property"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s' }}
+              onMouseOver={e => (e.currentTarget.style.transform = 'scale(1.05)')}
+              onMouseOut={e => (e.currentTarget.style.transform = 'scale(1)')}
+            />
+          </div>
+
+          <div style={{ padding: '12px', position: 'relative' }}>
+            {/* Share button */}
             <button
               onClick={() => handleShare(listing.id)}
               title={copiedMap[listing.id] ? 'Copied!' : 'Share public link'}
               style={{
                 position: 'absolute',
+                top: '12px',
                 right: '12px',
                 background: copiedMap[listing.id] ? '#34D399' : 'rgba(108, 99, 255, 0.1)',
                 color: copiedMap[listing.id] ? '#fff' : '#6c63ff',
@@ -65,12 +88,15 @@ const TaskList: React.FC<TaskListProps> = ({ listings }) => {
                 justifyContent: 'center',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
+                zIndex: 2,
               }}
             >
               {FiLink({ size: 16 })}
             </button>
 
-            <strong>{listing.propertyReference}</strong>
+            <strong style={{ fontSize: '1.1rem', display: 'block', marginBottom: '8px' }}>
+              {listing.propertyReference}
+            </strong>
 
             <ListingSlots
               listingId={listing.id}
