@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import TaskList from './components/TaskList';
 import TaskCreate from './components/TaskCreate';
-import { apiRequest } from './api/api';
+import { apiRequest, registerAuthTokenGetter } from './api/api';
+import { useAuth } from './auth/AuthContext';
 import './index.css';
 
 interface LoginPageProps {
-  onLogin: (accessToken: string) => void;
+  onLogin: (accessToken: string, idToken: string) => void;
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
@@ -22,12 +23,11 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     try {
       const data = await apiRequest('/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: { email, password },
       });
 
-      if (data.AccessToken) {
-        onLogin(data.AccessToken);
+      if (data.AccessToken && data.IdToken) {
+        onLogin(data.AccessToken, data.IdToken);
       } else {
         setError('Invalid credentials');
       }
@@ -68,34 +68,39 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
 };
 
 const App: React.FC = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
+
   const [listings, setListings] = useState<any[]>([]);
   const [showCreate, setShowCreate] = useState(false);
 
+  const { accessToken, idToken, login } = useAuth();
+
   useEffect(() => {
-    if (!loggedIn) return;
+    registerAuthTokenGetter(() => ({ accessToken, idToken }));
+  }, [accessToken, idToken]);
+
+  // Fetch listings once authenticated
+  useEffect(() => {
+    if (!accessToken) return;
 
     const fetchListings = async () => {
       try {
-        const data = await apiRequest('/listing', {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
+        const data = await apiRequest('/listing');
         setListings(data);
       } catch (err) {
         console.error('Failed to fetch listings:', err);
       }
     };
+
     fetchListings();
-  }, [loggedIn, accessToken]);
+  }, [accessToken]);
 
   const handleListingCreated = (newListing: any) => {
     setListings(prev => [newListing, ...prev]);
     setShowCreate(false);
   };
 
-  if (!loggedIn) {
-    return <LoginPage onLogin={(token) => { setAccessToken(token); setLoggedIn(true); }} />;
+  if (!accessToken) {
+    return <LoginPage onLogin={(accessToken, idToken) => login(accessToken, idToken)} />
   }
 
   return (
