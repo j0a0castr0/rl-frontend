@@ -717,3 +717,24 @@ body, html, #root {
     border: 1px solid rgba(108, 99, 255, 0.2); /* very light outline */
   }
   
+
+  /* Hide labels on small screens */
+@media (max-width: 640px) {
+    .nav-link span {
+      display: none; /* hide text */
+    }
+  }
+  
+  /* Keep spacing nice for icon-only */
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+  }
+  
+  .nav-link .icon {
+    width: 20px;
+    height: 20px;
+  }
+  

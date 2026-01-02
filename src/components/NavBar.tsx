@@ -30,32 +30,22 @@ const NavBar: React.FC = () => {
       </div>
 
       {/* Center Menu */}
-      <nav className="navbar-center">
-  <Link to="/" className={`nav-link listings-link ${location.pathname === '/' ? 'active' : ''}`}>
-    {/* Home / property icon */}
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="icon"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M3 9.75L12 3l9 6.75V21a1.5 1.5 0 01-1.5 1.5H4.5A1.5 1.5 0 013 21V9.75z"
-      />
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M9 22V12h6v10"
-      />
-    </svg>
-    Listings
-  </Link>
+      <nav className="navbar-center"><Link to="/" className={`nav-link listings-link ${location.pathname === '/' ? 'active' : ''}`}>
+  {/* Home / property icon */}
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 9.75L12 3l9 6.75V21a1.5 1.5 0 01-1.5 1.5H4.5A1.5 1.5 0 013 21V9.75z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 22V12h6v10" />
+  </svg>
+  <span>Listings</span>
+</Link>
 
-    {/* Visits Link */}
 <Link to="/visits" className="nav-link listings-link">
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -65,15 +55,12 @@ const NavBar: React.FC = () => {
     stroke="currentColor"
     strokeWidth={2}
   >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M8 7V3m8 4V3M3 11h18M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-    />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3M3 11h18M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
   </svg>
-  Visits
+  <span>Visits</span>
 </Link>
-</nav>
+
+        </nav>
 
 
       {/* Right: Profile */}
