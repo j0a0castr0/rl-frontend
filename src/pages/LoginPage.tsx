@@ -3,6 +3,7 @@ import { apiRequest } from '../api/api';
 import { useAuth } from '../auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import '../index.css';
+import logo from '../assets/logo.png';
 
 const LoginPage: React.FC = () => {
   const { login } = useAuth();
@@ -40,7 +41,13 @@ const LoginPage: React.FC = () => {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h2>Login</h2>
+      <div>
+            <img
+            src={logo}   // import your logo at top of file
+            alt="Logo"
+            style={{ height: '120px', margin : '-20px', width: 'auto' }}
+            />
+        </div>
 
         <form onSubmit={handleLogin}>
           <input
