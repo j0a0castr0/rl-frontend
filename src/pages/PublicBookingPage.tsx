@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { apiRequest } from '../api/api';
 import '../index.css';
+import logo from '../assets/logo.png';
 
 interface Slot {
   from: string;
@@ -65,7 +66,7 @@ const PublicScheduleingPage: React.FC = () => {
   };
 
   return (
-    <div className="login-container" style={{ backgroundColor: '#f0f4f8', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}>
+    <div className="login-container" style={{ backgroundColor: '#f0f4f8', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}>    
       <div
         className="login-card"
         style={{
@@ -77,6 +78,13 @@ const PublicScheduleingPage: React.FC = () => {
           backgroundColor: '#fff',
         }}
       >
+          <div>
+            <img
+            src={logo}   // import your logo at top of file
+            alt="Logo"
+            style={{ height: '70px', width: 'auto' }}
+            />
+        </div>
         {/* Slick Hero Image */}
         <div style={{ width: '100%', height: '220px', overflow: 'hidden', borderBottomLeftRadius: '16px', borderBottomRightRadius: '16px' }}>
           <img
