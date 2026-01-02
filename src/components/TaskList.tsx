@@ -58,13 +58,36 @@ const TaskList: React.FC<TaskListProps> = ({ listings }) => {
           }}
         >
           {/* Image at the top */}
-          <div style={{ height: '180px', width: '100%', overflow: 'hidden' }}>
+          <div
+            style={{
+              height: '180px',
+              width: '100%',
+              overflow: 'hidden',
+              borderRadius: '16px',
+              position: 'relative'
+            }}
+          >
             <img
-              src={`https://picsum.photos/400/180?random=${listing.id}`}
+              src={`https://picsum.photos/800/360?random=${listing.id}`}
+              srcSet={`
+                https://picsum.photos/400/180?random=${listing.id} 400w,
+                https://picsum.photos/800/360?random=${listing.id} 800w,
+                https://picsum.photos/1200/540?random=${listing.id} 1200w
+              `}
+              sizes="(max-width: 600px) 100vw, 50vw"
               alt="Property"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s' }}
-              onMouseOver={e => (e.currentTarget.style.transform = 'scale(1.05)')}
-              onMouseOut={e => (e.currentTarget.style.transform = 'scale(1)')}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px', transition: 'transform 0.3s' }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                background: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.2))',
+                pointerEvents: 'none',
+              }}
             />
           </div>
 
