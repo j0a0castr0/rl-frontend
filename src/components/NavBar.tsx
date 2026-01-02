@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import '../index.css';
+import logo from '../assets/logo.png';
 
 const NavBar: React.FC = () => {
   const { idToken, logout } = useAuth();
@@ -22,19 +23,37 @@ const NavBar: React.FC = () => {
       {/* Left: Logo */}
       <div className="navbar-left">
         <Link to="/" className="logo">
-          <img
-            src="https://via.placeholder.com/120x36?text=Logo"
-            alt="Logo"
-          />
+            <img src={logo} alt="Logo" />
         </Link>
       </div>
 
       {/* Center Menu */}
       <nav className="navbar-center">
-        <Link to="/" className="nav-link">
-          Listings Dashboard
-        </Link>
-      </nav>
+  <Link to="/" className="nav-link listings-link">
+    {/* Home / property icon */}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M3 9.75L12 3l9 6.75V21a1.5 1.5 0 01-1.5 1.5H4.5A1.5 1.5 0 013 21V9.75z"
+      />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9 22V12h6v10"
+      />
+    </svg>
+    Listings
+  </Link>
+</nav>
+
 
       {/* Right: Profile */}
       <div className="navbar-right" style={{ position: 'relative' }}>

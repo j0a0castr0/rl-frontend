@@ -465,30 +465,42 @@ body, html, #root {
   }
 
   /* Navbar container */
-.navbar {
+  .navbar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 24px;
-    height: 64px;
+    justify-content: space-between; /* still keeps left and right spaced */
+    height: 80px; /* taller for bigger logo */
+    padding: 0 24px;/* needed for absolute center */
     background-color: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    font-family: 'Inter', sans-serif;
+    position: sticky; /* stay at top */
+    top: 0;           /* stick to the top */
+    z-index: 10000;   
   }
+
+  .navbar-left {
+    display: flex;
+    align-items: center;   /* vertical center inside navbar */
+    height: 100%;
+}
   
   /* Logo */
   .navbar-left .logo img {
-    height: 36px;
-    object-fit: contain;
+    height: 115px;          /* your desired logo height */
+    width: auto;
+    display: block;         /* ensures no extra inline spacing */
+    margin: auto 0; 
+    margin-top: 4px;
   }
   
   /* Center menu */
   .navbar-center {
-    flex: 1;
-    text-align: center;
+    position: absolute;   /* independent of left/right spacing */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
   }
   
   .navbar-center .nav-link {
@@ -500,9 +512,42 @@ body, html, #root {
     border-radius: 9999px;
     transition: background 0.2s ease;
   }
+
+  /* Listings link with icon */
+.navbar-center .listings-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;                 /* space between icon and text */
+    padding: 8px 16px;
+    border-radius: 9999px;    /* pill shape */
+    background-color: rgba(108, 99, 255, 0.05);
+    font-weight: 600;
+    font-size: 1rem;
+    color: #111827;
+    transition: all 0.25s ease;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.navbar-center .listings-link .icon {
+    width: 20px;
+    height: 20px;
+    stroke: #6c63ff;           /* match primary color */
+}
+
+.navbar-center .listings-link:hover {
+    background-color: rgba(108, 99, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.2);
+}
   
   .navbar-center .nav-link:hover {
     background-color: rgba(108, 99, 255, 0.1);
+  }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    position: relative;
   }
   
   /* Right profile */
@@ -532,4 +577,23 @@ body, html, #root {
     background-color: rgba(108, 99, 255, 0.05);
   }
   
-  
+  @media (max-width: 768px) {
+    .navbar-left .logo img {
+        height: 50px; /* smaller on mobile */
+    }
+
+    .navbar {
+        height: 64px; /* reduce navbar height */
+        padding: 0 16px;
+    }
+
+    .navbar-center {
+        font-size: 0.9rem;
+    }
+}
+
+  .logo img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+  }
