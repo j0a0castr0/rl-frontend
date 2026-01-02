@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState,  } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import '../index.css';
 import logo from '../assets/logo.png';
+import { FaHome, FaCalendarCheck } from 'react-icons/fa'; 
 
 const NavBar: React.FC = () => {
+    const location = useLocation();
   const { idToken, logout } = useAuth();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
@@ -29,7 +31,7 @@ const NavBar: React.FC = () => {
 
       {/* Center Menu */}
       <nav className="navbar-center">
-  <Link to="/" className="nav-link listings-link">
+  <Link to="/" className={`nav-link listings-link ${location.pathname === '/' ? 'active' : ''}`}>
     {/* Home / property icon */}
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -52,6 +54,25 @@ const NavBar: React.FC = () => {
     </svg>
     Listings
   </Link>
+
+    {/* Visits Link */}
+<Link to="/visits" className="nav-link listings-link">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M8 7V3m8 4V3M3 11h18M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+    />
+  </svg>
+  Visits
+</Link>
 </nav>
 
 

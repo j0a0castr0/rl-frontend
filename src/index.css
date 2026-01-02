@@ -534,6 +534,12 @@ body, html, #root {
     stroke: #6c63ff;           /* match primary color */
 }
 
+.navbar-center .nav-link.active {
+    background-color: rgba(108, 99, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.25);
+  }
+
 .navbar-center .listings-link:hover {
     background-color: rgba(108, 99, 255, 0.15);
     transform: translateY(-2px);
