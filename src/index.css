@@ -183,12 +183,13 @@ body, html, #root {
   .slide-over {
     position: fixed;
     top: 0;
-    right: -400px;
+    right: 0;                 /* ✅ reset */
     width: 380px;
     height: 100%;
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
     box-shadow: -6px 0 20px rgba(0,0,0,0.25);
+    transform: translateX(110%);  /* ✅ hide */
     transition: transform 0.3s ease-in-out;
     z-index: 1000;
     display: flex;
@@ -196,7 +197,7 @@ body, html, #root {
   }
   
   .slide-over.open {
-    transform: translateX(0%);
+    transform: translateX(0);     /* ✅ show */
   }
   
   .slide-over-header {

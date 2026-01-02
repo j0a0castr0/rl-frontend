@@ -104,30 +104,49 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="container">
-      <div className="header">
-        Listing Task Dashboard
-        <button className="plus-button" onClick={() => setShowCreate(true)}>+</button>
+    <>
+      <div className="container">
+        <div className="header">
+          Listing Task Dashboard
+          <button
+            className="plus-button"
+            onClick={() => setShowCreate(true)}
+          >
+            +
+          </button>
+        </div>
+  
+        <div className="content">
+          <TaskList listings={listings} />
+        </div>
       </div>
-
-      <div className="content">
-        <TaskList listings={listings} />
-      </div>
-
+  
+      {/* Slide-over must be OUTSIDE container */}
       <div className={`slide-over ${showCreate ? 'open' : ''}`}>
         <div className="slide-over-header">
           <h2>Create Listing</h2>
-          <button className="close-button" onClick={() => setShowCreate(false)}>×</button>
+          <button
+            className="close-button"
+            onClick={() => setShowCreate(false)}
+          >
+            ×
+          </button>
         </div>
+  
         <div className="slide-over-content">
           <div className="slide-over-inner">
             <TaskCreate onCreated={handleListingCreated} />
           </div>
         </div>
       </div>
-
-      {showCreate && <div className="overlay" onClick={() => setShowCreate(false)} />}
-    </div>
+  
+      {showCreate && (
+        <div
+          className="overlay"
+          onClick={() => setShowCreate(false)}
+        />
+      )}
+    </>
   );
 };
 
