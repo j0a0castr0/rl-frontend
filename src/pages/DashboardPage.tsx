@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import TaskList from '../components/TaskList';
 import TaskCreate from '../components/TaskCreate';
 import { apiRequest, registerAuthTokenGetter } from '../api/api';
@@ -9,6 +9,7 @@ const DashboardPage: React.FC = () => {
   const [listings, setListings] = useState<any[]>([]);
   const [showCreate, setShowCreate] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { accessToken, idToken, logout } = useAuth();
 
@@ -39,12 +40,20 @@ const DashboardPage: React.FC = () => {
   // Extract initials from email in idToken
   const email = idToken ? JSON.parse(atob(idToken.split('.')[1])).email : '';
   const initials = email
-  ? email
-      .split('@')[0]
-      .split(/[\.\-_]/)
-      .map((w: string) => w?.[0]?.toUpperCase() || '')
-      .join('')
-  : '';
+    ? email
+        .split('@')[0]
+        .split(/[\.\-_]/)
+        .map((w: string) => w?.[0]?.toUpperCase() || '')
+        .join('')
+    : '';
+
+  // Filtered listings based on search term
+  const filteredListings = useMemo(() => {
+    if (!searchTerm) return listings;
+    return listings.filter(l =>
+      l.propertyReference?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [listings, searchTerm]);
 
   return (
     <>
@@ -113,8 +122,21 @@ const DashboardPage: React.FC = () => {
           </button>
         </div>
 
+        {/* ================= Search Bar ================= */}
+        <div className="search-container">
+            <div className="search-wrapper">
+                <input
+                type="text"
+                placeholder="Search by property reference..."
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                className="search-input"
+                />
+            </div>
+        </div>
+
         <div className="content">
-          <TaskList listings={listings} />
+          <TaskList listings={filteredListings} />
         </div>
       </div>
 

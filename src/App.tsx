@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import ProtectedRoute from './auth/ProtectedRoute';
+import PublicBookingPage from './pages/PublicBookingPage';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/public/:listingId" element={<PublicBookingPage />} />
       </Routes>
     </BrowserRouter>
   );
