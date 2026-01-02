@@ -1,32 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import ListingSlots from './ListingSlots';
 import { apiRequest } from '../api/api';
+import { FiLink } from 'react-icons/fi';
 
 interface TaskListProps {
-  listings: any[];
+  listings: { id: string; propertyReference: string }[];
 }
 
 const TaskList: React.FC<TaskListProps> = ({ listings }) => {
   const [slotsMap, setSlotsMap] = useState<Record<string, any[]>>({});
+  const [copiedMap, setCopiedMap] = useState<Record<string, boolean>>({});
 
-  // Fetch slots for each listing when listings change
+  // Fetch slots for all listings
   useEffect(() => {
-    listings.forEach(async (listing) => {
-      try {
-        const data = await apiRequest(`/listing/${listing.id}/slots`);
-        setSlotsMap(prev => ({ ...prev, [listing.id]: data }));
-      } catch (err) {
-        console.error(err);
+    listings.forEach(async listing => {
+      if (!slotsMap[listing.id]) {
+        try {
+          const data = await apiRequest(`/listing/${listing.id}/slots`);
+          setSlotsMap(prev => ({ ...prev, [listing.id]: data }));
+        } catch (err) {
+          console.error(err);
+        }
       }
     });
   }, [listings]);
 
   const handleSlotAdded = (listingId: string, slot: any) => {
-    // Add new slot to the correct listing only
     setSlotsMap(prev => ({
       ...prev,
       [listingId]: [...(prev[listingId] || []), slot],
     }));
+  };
+
+  const handleShare = (listingId: string) => {
+    const publicUrl = `${window.location.origin}/public/${listingId}`;
+    navigator.clipboard.writeText(publicUrl).then(() => {
+      setCopiedMap(prev => ({ ...prev, [listingId]: true }));
+      setTimeout(() => {
+        setCopiedMap(prev => ({ ...prev, [listingId]: false }));
+      }, 2000);
+    });
   };
 
   return (
@@ -35,14 +48,34 @@ const TaskList: React.FC<TaskListProps> = ({ listings }) => {
       {listings.map(listing => (
         <div key={listing.id} className="card listing-item slide-in">
           <div>
-            <strong>{listing.propertyReference || 'Unnamed'}</strong>
-            <div className="slot">Agent: {listing.agent || '-'}</div>
+            <button
+              onClick={() => handleShare(listing.id)}
+              title={copiedMap[listing.id] ? 'Copied!' : 'Share public link'}
+              style={{
+                position: 'absolute',
+                right: '12px',
+                background: copiedMap[listing.id] ? '#34D399' : 'rgba(108, 99, 255, 0.1)',
+                color: copiedMap[listing.id] ? '#fff' : '#6c63ff',
+                border: 'none',
+                borderRadius: '50%',
+                width: '32px',
+                height: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              {FiLink({ size: 16 })}
+            </button>
 
-            {/* ListingSlots now receives only its own slots */}
+            <strong>{listing.propertyReference}</strong>
+
             <ListingSlots
               listingId={listing.id}
               slots={slotsMap[listing.id] || []}
-              onSlotAdded={(slot) => handleSlotAdded(listing.id, slot)}
+              onSlotAdded={slot => handleSlotAdded(listing.id, slot)}
             />
           </div>
         </div>

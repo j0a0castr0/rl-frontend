@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { apiRequest } from '../api/api';
 
 interface TaskCreateProps {
-  onCreated: (listing: any) => void;
+  onCreated: (listing: { id: string; propertyReference: string }) => void;
 }
 
 const TaskCreate: React.FC<TaskCreateProps> = ({ onCreated }) => {
   const [propertyReference, setPropertyReference] = useState('');
-  const [agent, setAgent] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -17,13 +16,16 @@ const TaskCreate: React.FC<TaskCreateProps> = ({ onCreated }) => {
     setError('');
 
     try {
+      // API only returns ID
       const data = await apiRequest('/listing', {
         method: 'POST',
-        body: { propertyReference, agent },
+        body: { propertyReference },
       });
-      onCreated(data.data);
+
+      // Optimistic update: we know the propertyReference
+      onCreated({ id: data.data.id, propertyReference });
+
       setPropertyReference('');
-      setAgent('');
     } catch (err: any) {
       setError(err.message || 'Failed to create listing');
     } finally {
@@ -33,19 +35,14 @@ const TaskCreate: React.FC<TaskCreateProps> = ({ onCreated }) => {
 
   return (
     <form onSubmit={createListing}>
-      {['propertyReference', 'agent'].map((field, idx) => (
-        <input
-          key={field}
-          type="text"
-          placeholder={field === 'propertyReference' ? 'Property Reference' : 'Agent'}
-          value={field === 'propertyReference' ? propertyReference : agent}
-          onChange={field === 'propertyReference' ? e => setPropertyReference(e.target.value) : e => setAgent(e.target.value)}
-          style={{ animationDelay: `${idx * 0.1}s` }} // staggered animation
-        />
-      ))}
-      <button type="submit" style={{ animationDelay: '0.25s' }}>
-        {loading ? 'Creating...' : 'Create Listing'}
-      </button>
+      <input
+        type="text"
+        placeholder="Property Reference"
+        value={propertyReference}
+        onChange={e => setPropertyReference(e.target.value)}
+      />
+      <button type="submit">{loading ? 'Creating...' : 'Create Listing'}</button>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </form>
   );
 };
