@@ -143,22 +143,28 @@ body, html, #root {
   }
   
   .plus-button {
+    position: fixed;         /* stays in viewport */
+    bottom: 24px;            /* distance from bottom */
+    right: 24px;             /* distance from right */
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
     background-color: #6c63ff;
     color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
+    font-weight: 600;
     font-size: 28px;
+    border: none;
     cursor: pointer;
     box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  .plus-button:hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    z-index: 1000;           /* stays above content */
+}
+
+.plus-button:hover {
     transform: scale(1.1);
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  }
+    background-color: #5952d4;
+}
   
   /* ======================= */
   /* Content & Cards         */
@@ -436,3 +442,73 @@ body, html, #root {
     border-color: #6c63ff;
     box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
   }
+
+  /* Navbar container */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 64px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  /* Logo */
+  .navbar-left .logo img {
+    height: 36px;
+    object-fit: contain;
+  }
+  
+  /* Center menu */
+  .navbar-center {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .navbar-center .nav-link {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #111827;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    transition: background 0.2s ease;
+  }
+  
+  .navbar-center .nav-link:hover {
+    background-color: rgba(108, 99, 255, 0.1);
+  }
+  
+  /* Right profile */
+.navbar-right .profile-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #6c63ff;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .navbar-right .profile-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.35);
+  }
+  
+  /* Profile dropdown menu */
+  .profile-menu button:hover {
+    background-color: rgba(108, 99, 255, 0.05);
+  }
+  
+  

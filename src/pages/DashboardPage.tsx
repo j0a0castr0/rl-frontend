@@ -4,11 +4,11 @@ import TaskCreate from '../components/TaskCreate';
 import { apiRequest, registerAuthTokenGetter } from '../api/api';
 import { useAuth } from '../auth/AuthContext';
 import '../index.css';
+import NavBar from '../components/NavBar';
 
 const DashboardPage: React.FC = () => {
   const [listings, setListings] = useState<any[]>([]);
   const [showCreate, setShowCreate] = useState(false);
-  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   const { accessToken, idToken, logout } = useAuth();
@@ -57,66 +57,14 @@ const DashboardPage: React.FC = () => {
 
   return (
     <>
+      <NavBar />
       <div className="container">
         <div className="header">
-          Listing Task Dashboard
-
-          <div className="profile-container" style={{ position: 'relative' }}>
-            <button
-              className="profile-button"
-              onClick={() => setShowProfileMenu(prev => !prev)}
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '50%',
-                backgroundColor: '#6c63ff',
-                color: '#fff',
-                fontWeight: 600,
-                fontSize: '14px',
-                cursor: 'pointer',
-                border: 'none',
-              }}
-            >
-              {initials}
-            </button>
-
-            {showProfileMenu && (
-              <div
-                className="profile-menu"
-                style={{
-                  position: 'absolute',
-                  right: 0,
-                  top: '50px',
-                  background: '#fff',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                  borderRadius: '8px',
-                  overflow: 'hidden',
-                  zIndex: 2000,
-                }}
-              >
-                <button
-                  onClick={logout}
-                  style={{
-                    display: 'block',
-                    padding: '10px 16px',
-                    width: '100%',
-                    textAlign: 'left',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    fontWeight: 500,
-                  }}
-                >
-                  Logout
-                </button>
-              </div>
-            )}
-          </div>
+          
 
           <button
             className="plus-button"
             onClick={() => setShowCreate(true)}
-            style={{ marginLeft: '12px' }}
           >
             +
           </button>
