@@ -13,15 +13,29 @@ body, html, #root {
   /* ======================= */
   /* Login Page              */
   /* ======================= */
-  .login-container {
+  /* Public Scheduling Page Container */
+.login-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; /* allows it to grow if content taller */
     width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f7fa;
+    padding: 40px 16px; /* breathing space top/bottom */
+    box-sizing: border-box;
+    background-color: #f0f4f8;
+  }
+  
+  /* Make it responsive */
+  @media (max-height: 700px), (max-width: 480px) {
+    .login-container {
+      align-items: flex-start;   /* allow scrolling if card taller than viewport */
+      padding: 24px 16px;        /* less padding on very small screens */
+    }
+  
+    .login-card {
+      width: 100%;
+      max-width: 480px;
+    }
   }
   
   .login-card {
