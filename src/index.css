@@ -141,11 +141,28 @@ body, html, #root {
     position: relative;
     margin-bottom: 20px;
   }
+
+  /* Subtle pulse animation */
+@keyframes pulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 6px 16px rgba(108, 99, 255, 0.35);
+    }
+    50% {
+      transform: scale(1.08);
+      box-shadow: 0 10px 20px rgba(108, 99, 255, 0.45);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 6px 16px rgba(108, 99, 255, 0.35);
+    }
+  }
+  
   
   .plus-button {
-    position: fixed;         /* stays in viewport */
-    bottom: 24px;            /* distance from bottom */
-    right: 24px;             /* distance from right */
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -157,14 +174,18 @@ body, html, #root {
     cursor: pointer;
     box-shadow: 0 6px 16px rgba(0,0,0,0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    z-index: 1000;           /* stays above content */
+    z-index: 1000;
+
+    animation: pulse 2.5s ease-in-out infinite; /* ✨ Add pulse */
 }
 
 .plus-button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    transform: scale(1.12); /* Slightly stronger on hover */
+    box-shadow: 0 12px 24px rgba(108, 99, 255, 0.55);
     background-color: #5952d4;
+    animation: none; /* Stop pulsing while hovered */
 }
+
   
   /* ======================= */
   /* Content & Cards         */
