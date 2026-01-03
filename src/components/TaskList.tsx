@@ -32,14 +32,32 @@ const TaskList: React.FC<TaskListProps> = ({ listings }) => {
     }));
   };
 
-  const handleShare = (listingId: string) => {
+  const handleShare = async (listingId: string) => {
     const publicUrl = `${window.location.origin}/public/${listingId}`;
-    navigator.clipboard.writeText(publicUrl).then(() => {
+  
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(publicUrl);
+      } else {
+        // Fallback
+        const textArea = document.createElement('textarea');
+        textArea.value = publicUrl;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
+  
       setCopiedMap(prev => ({ ...prev, [listingId]: true }));
       setTimeout(() => {
         setCopiedMap(prev => ({ ...prev, [listingId]: false }));
       }, 2000);
-    });
+    } catch (err) {
+      console.error('Copy failed', err);
+    }
   };
 
   return (
