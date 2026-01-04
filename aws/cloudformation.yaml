@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Real Calendar Frontend Deployment
+
+Parameters:
+  BucketName:
+    Type: String
+    Description: "Name of the S3 bucket for the React app"
+
+Resources:
+  RealCalendarFrontendBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: index.html
+
+Outputs:
+  BucketName:
+    Value: !Ref RealCalendarFrontendBucket
+    Export:
+      Name: !Sub "${BucketName}-Name"

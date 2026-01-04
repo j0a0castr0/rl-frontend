@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
+    env:
+        AWS_REGION: eu-west-1
+        STACK_NAME: ${{ env.STACK_NAME }}
+        BUCKET_NAME: ${{ env.BUCKET_NAME }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -30,22 +35,25 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-1
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Deploy CloudFormation stack
         run: |
-          echo "Deploying CloudFormation stack: $STACK_NAME"
+          STACK_NAME="${{ env.STACK_NAME }}"
+          BUCKET_NAME="${{ env.BUCKET_NAME }}"
+          
+          echo "Deploying CloudFormation stack: $STACK_NAME with bucket: $BUCKET_NAME"
+          
           aws cloudformation deploy \
-            --template-file s3-bucket.yml \
+            --template-file aws/cloudformation.yaml \
             --stack-name "$STACK_NAME" \
-            --capabilities CAPABILITY_NAMED_IAM
+            --capabilities CAPABILITY_NAMED_IAM \
+            --parameter-overrides BucketName="$BUCKET_NAME"
 
       - name: Sync React build to S3
         run: |
-          BUCKET_NAME=$(aws cloudformation describe-stacks \
-            --stack-name "$STACK_NAME" \
-            --query "Stacks[0].Outputs[?OutputKey=='BucketName'].OutputValue" \
-            --output text)
+          BUCKET_NAME="${{ github.event.inputs['bucket-name'] }}"
           
-          echo "Deploying to bucket: $BUCKET_NAME"
+          echo "Deploying build to bucket: $BUCKET_NAME"
+          
           aws s3 sync ./rl-frontend/build s3://$BUCKET_NAME --delete
