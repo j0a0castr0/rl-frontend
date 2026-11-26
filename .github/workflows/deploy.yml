@@ -7,13 +7,14 @@ on:
 
 jobs:
   deploy:
+    if: false
     runs-on: ubuntu-latest
     environment: production
 
     env:
         AWS_REGION: eu-west-1
-        STACK_NAME: ${{ env.STACK_NAME }}
-        BUCKET_NAME: ${{ env.BUCKET_NAME }}
+        STACK_NAME: ${{ vars.STACK_NAME }}
+        BUCKET_NAME: ${{ vars.BUCKET_NAME }}
 
     steps:
       - name: Checkout repository
